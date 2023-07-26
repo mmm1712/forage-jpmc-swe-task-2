@@ -27,9 +27,15 @@ class DataStreamer {
 
     request.onload = () => {
       if (request.status === 200) {
-        callback(JSON.parse(request.responseText));
+        if (request.responseText.trim() !== '') {
+          // Check if the response is not empty before parsing it
+          callback(JSON.parse(request.responseText));
+        } else {
+          // Handle the case when the response is empty
+          console.log('Received empty response from the server.');
+        }
       } else {
-        alert ('Request failed');
+        alert('Request failed');
       }
     }
 
